@@ -5,7 +5,9 @@
 #define NUM_BOXES 10
 
 GtkWidget *boxes[NUM_BOXES];
-const char *download_links[NUM_BOXES] = {
+const char *download_links[NUM_BOXES];
+
+const char *x86_links[NUM_BOXES] = {
     "https://example.com/package1.deb",
     "https://example.com/package2.deb",
     "https://example.com/package3.deb",
@@ -16,6 +18,19 @@ const char *download_links[NUM_BOXES] = {
     "https://example.com/package8.deb",
     "https://example.com/package9.deb",
     "https://example.com/package10.deb"
+};
+
+const char *powerpc_links[NUM_BOXES] = {
+    "https://powerpc.example.com/package1.deb",
+    "https://powerpc.example.com/package2.deb",
+    "https://powerpc.example.com/package3.deb",
+    "https://powerpc.example.com/package4.deb",
+    "https://powerpc.example.com/package5.deb",
+    "https://powerpc.example.com/package6.deb",
+    "https://powerpc.example.com/package7.deb",
+    "https://powerpc.example.com/package8.deb",
+    "https://powerpc.example.com/package9.deb",
+    "https://powerpc.example.com/package10.deb"
 };
 
 const char *box_labels[NUM_BOXES] = {
@@ -30,6 +45,27 @@ const char *box_labels[NUM_BOXES] = {
     "Download Package 9",
     "Download Package 10"
 };
+
+void detect_architecture() {
+    FILE *fp = popen("uname -m", "r");
+    if (fp == NULL) {
+        g_print("Failed to detect architecture. Defaulting to x86.\n");
+        memcpy(download_links, x86_links, sizeof(x86_links));
+        return;
+    }
+
+    char buffer[128];
+    fgets(buffer, sizeof(buffer), fp);
+    pclose(fp);
+
+    if (strstr(buffer, "powerpc") != NULL) {
+        memcpy(download_links, powerpc_links, sizeof(powerpc_links));
+        g_print("PowerPC architecture detected. Using PowerPC links.\n");
+    } else {
+        memcpy(download_links, x86_links, sizeof(x86_links));
+        g_print("x86 architecture detected. Using x86 links.\n");
+    }
+}
 
 void download_and_install(const char *link) {
     if (link) {
@@ -67,6 +103,8 @@ void run_cli_mode() {
 }
 
 int main(int argc, char *argv[]) {
+    detect_architecture();
+
     if (argc > 1 && strcmp(argv[1], "-cli") == 0) {
         run_cli_mode();
         return 0;
@@ -75,7 +113,7 @@ int main(int argc, char *argv[]) {
     gtk_init(&argc, &argv);
 
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(window), "Wiibuntu Software");
+    gtk_window_set_title(GTK_WINDOW(window), "Package Downloader");
     gtk_container_set_border_width(GTK_CONTAINER(window), 10);
     gtk_widget_set_size_request(window, 400, 500);
 
