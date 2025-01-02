@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define NUM_BOXES 10
 
@@ -57,7 +58,20 @@ GtkWidget* create_clickable_box(int index) {
     return box;
 }
 
+void run_cli_mode() {
+    printf("Running in CLI mode. Downloading all packages...\n");
+    for (int i = 0; i < NUM_BOXES; i++) {
+        download_and_install(download_links[i]);
+    }
+    printf("All downloads and installations completed.\n");
+}
+
 int main(int argc, char *argv[]) {
+    if (argc > 1 && strcmp(argv[1], "-cli") == 0) {
+        run_cli_mode();
+        return 0;
+    }
+
     gtk_init(&argc, &argv);
 
     GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
