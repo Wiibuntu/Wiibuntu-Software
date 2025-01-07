@@ -36,7 +36,7 @@ const char *powerpc_links[NUM_BOXES] = {
 const char *box_labels[NUM_BOXES] = {
     "Swap Editor",
     "Breakout-Clone",
-    "WiiBench",
+    "WiiBench (PPC Only)",
     "Download Package 4",
     "Download Package 5",
     "Download Package 6",
