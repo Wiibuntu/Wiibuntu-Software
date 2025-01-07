@@ -9,7 +9,7 @@ const char *download_links[NUM_BOXES];
 
 const char *x86_links[NUM_BOXES] = {
     "https://github.com/Wiibuntu/Wiibuntu-Packages/blob/main/packages/swap-editor-x86.deb",
-    "https://example.com/package2.deb",
+    "https://github.com/Wiibuntu/Wiibuntu-Packages/blob/main/packages/Breakout-x86.deb",
     "https://example.com/package3.deb",
     "https://example.com/package4.deb",
     "https://example.com/package5.deb",
@@ -22,7 +22,7 @@ const char *x86_links[NUM_BOXES] = {
 
 const char *powerpc_links[NUM_BOXES] = {
     "https://github.com/Wiibuntu/Wiibuntu-Packages/blob/main/packages/swap-editor-ppc.deb",
-    "https://powerpc.example.com/package2.deb",
+    "https://github.com/Wiibuntu/Wiibuntu-Packages/blob/main/packages/Breakout-ppc.deb",
     "https://powerpc.example.com/package3.deb",
     "https://powerpc.example.com/package4.deb",
     "https://powerpc.example.com/package5.deb",
@@ -35,7 +35,7 @@ const char *powerpc_links[NUM_BOXES] = {
 
 const char *box_labels[NUM_BOXES] = {
     "Swap Editor",
-    "Download Package 2",
+    "Breakout-Clone",
     "Download Package 3",
     "Download Package 4",
     "Download Package 5",
